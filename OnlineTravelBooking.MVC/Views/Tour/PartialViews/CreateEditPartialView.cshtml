@@ -1,0 +1,120 @@
+﻿@using OnlineTravelBooking.Application.Abstractions
+@using OnlineTravelBooking.Domain.Entities.Tour
+
+@inject IGenericRepository<Tour> _tourRepository
+@inject IGenericRepository<TourCategory> _tourCategoryRepository
+
+@{
+    var categories = new SelectList(
+        _tourCategoryRepository.GetAll().Result.Select(tc => new
+        {
+            Id = tc.Id,
+            Name = tc.Name
+        }),
+        "Id",
+        "Name");
+}
+@model TourDto
+@{
+    var tour = (Model != null && Model.Id > 0)
+        ? _tourRepository.GetById(Model.Id)
+        : null;
+}
+
+
+
+<div class="form-group mb-3 col-6">
+    <label class="form-label" asp-for="Title"></label>
+    <input asp-for="Title" class="form-control" />
+    <span asp-validation-for="Title" class="text-danger"></span>
+</div>
+
+<div class="form-group mb-3 col-6">
+    <label class="form-label" asp-for="Slug"></label>
+    <input asp-for="Slug" class="form-control" />
+    <span asp-validation-for="Slug" class="text-danger"></span>
+</div>
+<div class="form-group mb-3 col-6">
+    <label class="form-label" asp-for="Price"></label>
+    <input asp-for="Price" class="form-control" />
+    <span asp-validation-for="Price" class="text-danger"></span>
+</div>
+<div class="form-group mb-3 col-6">
+    <label class="form-label" asp-for="ProviderName"></label>
+    <input asp-for="ProviderName" class="form-control" />
+    <span asp-validation-for="ProviderName" class="text-danger"></span>
+</div>
+<div class="form-group mb-3 col-6">
+    <label class="form-label" asp-for="ProviderContact"></label>
+    <input asp-for="ProviderContact" class="form-control" />
+    <span asp-validation-for="ProviderContact" class="text-danger"></span>
+</div>
+<div class="form-group mb-3 col-6">
+    <label class="form-label" asp-for="duration"></label>
+    <input asp-for="duration" class="form-control" />
+    <span asp-validation-for="duration" class="text-danger"></span>
+</div>
+<div class="form-group mb-3 col-6">
+    <label class="form-label" asp-for="CategoryId"></label>
+    <select asp-for="CategoryId" class="form-select" asp-items="categories">
+        <option value="">-- Select Category --</option>
+    </select>
+    <span asp-validation-for="CategoryId" class="text-danger"></span>
+</div>
+<div class="form-group mb-3 col-12">
+    <label class="form-label" asp-for="Summary"></label>
+    <textarea asp-for="Summary" class="form-control" rows="3"></textarea>
+    <span asp-validation-for="Summary" class="text-danger"></span>
+</div>
+<div class="form-group mb-3 col-12">
+    <label class="form-label" asp-for="Description"></label>
+    <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>
+<div class="form-group mb-3 col-6">
+    <label class="form-label" asp-for="Image">Upload Image</label>
+    <input asp-for="Image" type="file" class="form-control" />
+    <span asp-validation-for="Image" class="text-danger"></span>
+</div>
+@if (tour != null && !string.IsNullOrEmpty(tour.Result.ImageUrl))
+{
+    <div class="form-group mb-3 col-6">
+        <label class="form-label">Current Image</label>
+        <div>
+            <img src="~/Files/Images/@tour.Result.ImageUrl" alt="Tour Image" style="max-width: 200px; max-height: 200px;" />
+        </div>
+    </div>
+}
+<div class="form-group mb-3 col-6">
+    <label class="form-label">Latitude</label>
+    <input asp-for="Latitude" class="form-control" placeholder="e.g. 30.0444" />
+    <span asp-validation-for="Latitude" class="text-danger"></span>
+</div>
+
+<div class="form-group mb-3 col-6">
+    <label class="form-label">Longitude</label>
+    <input asp-for="Longitude" class="form-control" placeholder="e.g. 31.2357" />
+    <span asp-validation-for="Longitude" class="text-danger"></span>
+</div>
+<div class="form-group mb-3 col-6">
+    <label class="form-label" asp-for="AverageRating"></label>
+    <input asp-for="AverageRating" class="form-control" />
+    <span asp-validation-for="AverageRating" class="text-danger"></span>
+</div>
+<div class="form-group mb-3 col-6">
+    <label class="form-label" asp-for="BookingCount"></label>
+    <input asp-for="BookingCount" class="form-control" />
+    <span asp-validation-for="BookingCount" class="text-danger"></span>
+</div>
+
+<div class="form-group mb-3 col-6">
+    <label class="form-label" asp-for="ViewCount"></label>
+    <input asp-for="ViewCount" class="form-control" />
+    <span asp-validation-for="ViewCount" class="text-danger"></span>
+</div>
+
+<div class="form-group mb-3 col-6">
+    <label class="form-label" asp-for="ReviewCount"></label>
+    <input asp-for="ReviewCount" class="form-control" />
+    <span asp-validation-for="ReviewCount" class="text-danger"></span>
+</div>

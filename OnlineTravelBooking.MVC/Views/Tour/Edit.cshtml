@@ -1,0 +1,16 @@
+﻿@model TourDto
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="row justify-content-center align-content-center mt-3">
+    <h1 class="col-8 my-4">Edit Tour</h1>
+    <form method="post" asp-controller="Tour" asp-action="Edit" class="row col-8" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly"></div>
+        <partial name="PartialViews/CreateEditPartialView" model="Model" />
+        <div class="mt-4 m-auto">
+            <input class="btn btn-success" type="submit" value="Save" />
+            <a asp-controller="Tour" asp-action="Index" class="btn btn-outline-dark">Back to list</a>
+        </div>
+    </form>
+</div>

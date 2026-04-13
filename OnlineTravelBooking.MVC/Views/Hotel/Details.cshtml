@@ -1,0 +1,74 @@
+﻿@using OnlineTravelBooking.MVC.Models.HotelViewModel
+@using OnlineTravelBooking.Domain.Common.Enums.HotelEnum
+@model HotelListVM
+
+@{
+    ViewData["Title"] = "Hotel Details";
+}
+
+<div class="row justify-content-center align-content-center mt-3">
+    <h1 class="col-8 my-4">Hotel Details</h1>
+
+    <div class="form-group mb-3 col-6">
+        <label class="form-label">Hotel Name</label>
+        <input class="form-control" value="@Model.Name" readonly />
+    </div>
+
+    <div class="form-group mb-3 col-6">
+        <label class="form-label">City</label>
+        <input class="form-control" value="@Model.City" readonly />
+    </div>
+
+    <div class="form-group mb-3 col-6">
+        <label class="form-label">Country</label>
+        <input class="form-control" value="@Model.Country" readonly />
+    </div>
+</div>
+
+<hr />
+
+<h3 class="mt-4">Rooms</h3>
+
+@if (Model.roomList != null && Model.roomList.Any())
+{
+    <table class="table table-striped table-hover mt-3">
+        <thead class="text-center">
+            <tr>
+                <th>Room Number</th>
+                <th>Price / Night</th>
+                <th>Max People</th>
+                <th>Status</th>
+                <th>Type</th>
+                <th>Availability</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            @foreach (var room in Model.roomList)
+            {
+                <tr>
+                    <td>@room.RoomNum</td>
+                    <td>@room.BasePricePerNight</td>
+                    <td>@room.MaxPeople</td>
+                    <td>@room.roomStatus</td>
+                    <td>@room.roomType</td>
+                    <td>@room.roomAvailability</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info mt-3">
+        No Rooms Found For This Hotel
+    </div>
+}
+
+<div class="mt-4">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">
+        Edit
+    </a>
+    <a asp-action="Index" class="btn btn-outline-dark">
+        Back To List
+    </a>
+</div>

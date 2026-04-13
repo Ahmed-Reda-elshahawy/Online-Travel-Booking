@@ -1,0 +1,99 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    .hero {
+        background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+        color: white;
+        border-radius: 0.5rem;
+        padding: 2.5rem;
+    }
+
+    .hero .lead {
+        opacity: 0.95;
+    }
+
+    .quick-card:hover {
+        transform: translateY(-6px);
+        transition: transform 0.15s ease-in-out;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .stat-number {
+        font-size: 1.6rem;
+        font-weight: 600;
+    }
+
+    .muted-small {
+        font-size: 0.85rem;
+        color: #6c757d;
+    }
+</style>
+
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="hero d-flex flex-column flex-md-row align-items-center justify-content-between">
+                <div>
+                    <h1 class="display-6 mb-1">Welcome to Admin Dashboard</h1>
+                    <p class="lead mb-2">Manage flights, tours and bookings efficiently.</p>
+                </div>
+                <div class="mt-3 mt-md-0">
+                    <a asp-controller="Bookings" asp-action="Index" class="btn btn-outline-light btn-lg">Bookings Overview</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card p-3 quick-card h-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="stat-number">@ViewBag.FlightsCount</div>
+                        <div class="muted-small">Total Flights</div>
+                    </div>
+                    <div class="text-primary fs-2">✈️</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card p-3 quick-card h-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="stat-number">@ViewBag.ToursCount</div>
+                        <div class="muted-small">Total Tours</div>
+                    </div>
+                    <div class="text-success fs-2">🧭</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card p-3 quick-card h-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="stat-number">@ViewBag.BookingsCount</div>
+                        <div class="muted-small">New Bookings</div>
+                    </div>
+                    <div class="text-warning fs-2">📥</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card p-3 quick-card h-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="stat-number">@ViewBag.UsersCount</div>
+                        <div class="muted-small">Active Users</div>
+                    </div>
+                    <div class="text-danger fs-2">👥</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

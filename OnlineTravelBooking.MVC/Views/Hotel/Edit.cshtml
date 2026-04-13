@@ -1,0 +1,94 @@
+﻿@using OnlineTravelBooking.MVC.Models.HotelViewModel
+@model HotelListVM
+
+@{
+    ViewData["Title"] = "Edit Hotel";
+}
+
+<div class="row justify-content-center align-content-center mt-3">
+    <h1 class="col-8 my-4">Edit Hotel</h1>
+
+    <form method="post"
+          asp-controller="Hotel"
+          asp-action="Edit"
+          asp-route-id="@Model.Id"
+          class="row col-8">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <!-- Name -->
+        <div class="form-group mb-3 col-6">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+        </div>
+
+        <!-- Description -->
+        <div class="form-group mb-3 col-6">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+        </div>
+
+        <!-- Address -->
+        <div class="form-group mb-3 col-6">
+            <label asp-for="Address" class="form-label"></label>
+            <input asp-for="Address" class="form-control" />
+        </div>
+
+        <!-- City -->
+        <div class="form-group mb-3 col-6">
+            <label asp-for="City" class="form-label"></label>
+            <input asp-for="City" class="form-control" />
+        </div>
+
+        <!-- Country -->
+        <div class="form-group mb-3 col-6">
+            <label asp-for="Country" class="form-label"></label>
+            <input asp-for="Country" class="form-control" />
+        </div>
+
+        <!-- Postal Code -->
+        <div class="form-group mb-3 col-6">
+            <label asp-for="PostalCode" class="form-label"></label>
+            <input asp-for="PostalCode" class="form-control" />
+        </div>
+
+        <!-- Star Rating -->
+        <div class="form-group mb-3 col-6">
+            <label asp-for="StarRating" class="form-label"></label>
+            <input asp-for="StarRating" type="number" min="1" max="5" class="form-control" />
+        </div>
+
+        <!-- Check In -->
+        <div class="form-group mb-3 col-6">
+            <label asp-for="CheckInTime" class="form-label"></label>
+            <input asp-for="CheckInTime" type="time" class="form-control" />
+        </div>
+
+        <!-- Check Out -->
+        <div class="form-group mb-3 col-6">
+            <label asp-for="CheckOutTime" class="form-label"></label>
+            <input asp-for="CheckOutTime" type="time" class="form-control" />
+        </div>
+
+        <!-- Contact Phone -->
+        <div class="form-group mb-3 col-6">
+            <label asp-for="ContactPhone" class="form-label"></label>
+            <input asp-for="ContactPhone" class="form-control" />
+        </div>
+
+        <!-- Website -->
+        <div class="form-group mb-3 col-6">
+            <label asp-for="WebsiteURL" class="form-label"></label>
+            <input asp-for="WebsiteURL" class="form-control" />
+        </div>
+
+        <div class="mt-4 m-auto">
+            <input class="btn btn-success" type="submit" value="Save" />
+            <a asp-controller="Hotel"
+               asp-action="Index"
+               class="btn btn-outline-dark">
+                Back to list
+            </a>
+        </div>
+    </form>
+</div>

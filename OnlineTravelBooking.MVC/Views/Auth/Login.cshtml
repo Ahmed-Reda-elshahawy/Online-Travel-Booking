@@ -1,0 +1,61 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm mt-5">
+            <div class="card-body p-4">
+                <h3 class="card-title text-center mb-4">Sign in to your account</h3>
+
+                <form asp-action="Login" method="post" novalidate>
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="All" class="validation-summary-valid d-none" data-valmsg-summary="true"></div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Email" class="form-control" placeholder="name@example.com" />
+                        <label asp-for="Email">Email</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Password" />
+                        <label asp-for="Password">Password</label>
+                    </div>
+
+                    <div class="d-grid mb-2">
+                        <button type="submit" class="btn btn-primary btn-lg">Login</button>
+                    </div>
+
+                    <div class="text-center">
+                        <a asp-action="ForgotPassword" asp-controller="Auth">Forgot password?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <p class="text-center text-muted small mt-3">Use your account credentials to sign in.</p>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var vs = document.querySelector('[data-valmsg-summary="true"]');
+            if (!vs) return;
+
+            // Determine if the summary contains any visible text (ignores empty UL added by unobtrusive validation)
+            var text = (vs.textContent || vs.innerText || '').trim();
+            if (text.length > 0) {
+                vs.classList.remove('validation-summary-valid', 'd-none');
+                vs.classList.add('alert', 'alert-danger');
+            } else {
+                // hide empty summary
+                vs.classList.add('d-none');
+            }
+        });
+    </script>
+}

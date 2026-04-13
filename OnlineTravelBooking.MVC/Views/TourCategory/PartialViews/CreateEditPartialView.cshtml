@@ -1,0 +1,17 @@
+﻿@using OnlineTravelBooking.Application.Abstractions
+@using OnlineTravelBooking.Domain.Entities.Tour
+
+@inject IGenericRepository<TourCategory> _tourCategoryRepository
+
+@model TourCategoryDto
+@{
+    var tourCategory = (Model != null && Model.Id > 0)
+        ? _tourCategoryRepository.GetById(Model.Id)
+        : null;
+}
+
+<div class="form-group mb-3 col-6">
+    <label class="form-label" asp-for="Name"></label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>

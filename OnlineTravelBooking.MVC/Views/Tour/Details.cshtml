@@ -1,0 +1,109 @@
+﻿@using OnlineTravelBooking.Application.Abstractions
+@using OnlineTravelBooking.Domain.Entities.Tour
+@inject IGenericRepository<TourCategory> _tourCategoryRepository
+
+@model TourDto
+@{
+    ViewData["Title"] = "Tour Details";
+}
+@{
+    var categories = 
+        _tourCategoryRepository.GetAll().Result.Select(tc => new
+        {
+            Id = tc.Id,
+            Name = tc.Name
+        });
+}
+
+<div class="row justify-content-center align-content-center mt-3">
+    <h1 class="col-8 my-4">Tour Details</h1>
+
+    <div class="form-group mb-3 col-6">
+        <label class="form-label" asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" readonly />
+    </div>
+
+    <div class="form-group mb-3 col-6">
+        <label class="form-label" asp-for="Slug"></label>
+        <input asp-for="Slug" class="form-control" readonly />
+    </div>
+    <div class="form-group mb-3 col-6">
+        <label class="form-label" asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" readonly />
+    </div>
+    <div class="form-group mb-3 col-6">
+        <label class="form-label" asp-for="ProviderName"></label>
+        <input asp-for="ProviderName" class="form-control" readonly />
+    </div>
+    <div class="form-group mb-3 col-6">
+        <label class="form-label" asp-for="ProviderContact"></label>
+        <input asp-for="ProviderContact" class="form-control" readonly />
+    </div>
+    <div class="form-group mb-3 col-6">
+        <label class="form-label" asp-for="duration"></label>
+        <input asp-for="duration" class="form-control" readonly />
+    </div>
+    <div class="form-group mb-3 col-6">
+        <label class="form-label" asp-for="CategoryId"></label>
+        @{
+                        var categoryName = categories.FirstOrDefault(c => c.Id == Model.CategoryId)?.Name ?? "N/A";
+        }
+        <input class="form-control" value="@categoryName" readonly />
+        
+    </div>
+    <div class="form-group mb-3 col-12">
+        <label class="form-label" asp-for="Summary"></label>
+        <textarea asp-for="Summary" class="form-control" rows="3" readonly></textarea>
+    </div>
+    <div class="form-group mb-3 col-12">
+        <label class="form-label" asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control" rows="5" readonly></textarea>
+    </div>
+    <div class="form-group mb-3 col-6">
+        <label class="form-label" asp-for="ImageUrl"> Image</label>
+
+        @if (Model != null && !string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <div class="form-group mb-3 col-6">
+                <label class="form-label">Current Image</label>
+                <div>
+                    <img src="~/Files/Images/@Model.ImageUrl" alt="Tour Image" style="max-width: 200px; max-height: 200px;" />
+                </div>
+            </div>
+        }
+        <input asp-for="ImageUrl" type="Text" class="form-control" readonly />
+    </div>
+    <div class="form-group mb-3 col-6">
+        <label class="form-label">Latitude</label>
+        <input asp-for="Latitude" class="form-control" placeholder="e.g. 30.0444" readonly />
+    </div>
+
+    <div class="form-group mb-3 col-6">
+        <label class="form-label">Longitude</label>
+        <input asp-for="Longitude" class="form-control" placeholder="e.g. 31.2357"  readonly/>
+        
+    </div>
+    <div class="form-group mb-3 col-6">
+        <label class="form-label" asp-for="AverageRating"></label>
+        <input asp-for="AverageRating" class="form-control" readonly />
+    </div>
+    <div class="form-group mb-3 col-6">
+        <label class="form-label" asp-for="BookingCount"></label>
+        <input asp-for="BookingCount" class="form-control" readonly />
+    </div>
+
+    <div class="form-group mb-3 col-6">
+        <label class="form-label" asp-for="ViewCount"></label>
+        <input asp-for="ViewCount" class="form-control" readonly />
+    </div>
+
+    <div class="form-group mb-3 col-6">
+        <label class="form-label" asp-for="ReviewCount"></label>
+        <input asp-for="ReviewCount" class="form-control" readonly />
+    </div>
+
+</div>
+<div class="mt-4">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">Edit</a>
+    <a asp-action="Index" class="btn btn-outline-dark">Back To list</a>
+</div>

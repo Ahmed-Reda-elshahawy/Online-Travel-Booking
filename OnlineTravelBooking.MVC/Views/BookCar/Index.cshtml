@@ -1,0 +1,135 @@
+﻿@* OnlineTravelBooking.MVC/Views/BookCar/Index.cshtml *@
+@using OnlineTravelBooking.MVC.Models;
+@model IEnumerable<CarDto>
+@{
+    ViewData["Title"] = "Car List";
+}
+
+<h1>All Cars</h1>
+<br />
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <a class="btn btn-primary" asp-controller="BookCar" asp-action="Create">
+            <i class="fas fa-plus"></i> Create Car
+        </a>
+    </div>
+    <div class="col-md-6">
+        <form asp-action="SearchByBrand" method="get" class="d-flex">
+            <input type="text" name="brand" class="form-control me-2" placeholder="Search by brand..." />
+            <button type="submit" class="btn btn-secondary">
+                <i class="fas fa-search"></i> Search
+            </button>
+        </form>
+    </div>
+</div>
+
+<div id="CarTableContainer">
+    @if (Model.Any())
+    {
+        <table class="table table-striped table-hover mt-3">
+            <thead class="text-center table-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(e => e.Brand)</th>
+                    <th>@Html.DisplayNameFor(e => e.Model)</th>
+                    <th>@Html.DisplayNameFor(e => e.Type)</th>
+                    <th>@Html.DisplayNameFor(e => e.TransmissionType)</th>
+                    <th>@Html.DisplayNameFor(e => e.FuelType)</th>
+                    <th>@Html.DisplayNameFor(e => e.SeatingCapacity)</th>
+                    <th>@Html.DisplayNameFor(e => e.PricePerDay)</th>
+                    <th>@Html.DisplayNameFor(e => e.Year)</th>
+                    <th>@Html.DisplayNameFor(e => e.IsAvailable)</th>
+                    <th>Details</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                @foreach (var car in Model)
+                {
+                    <tr>
+                        <td>@car.Brand</td>
+                        <td>@car.Model</td>
+                        <td>@car.Type</td>
+                        <td>@car.TransmissionType</td>
+                        <td>@car.FuelType</td>
+                        <td>@car.SeatingCapacity</td>
+                        <td>@car.PricePerDay.ToString("C")</td>
+                        <td>@car.Year</td>
+                        <td>
+                            @if (car.IsAvailable)
+                            {
+                                <span class="badge bg-success">Available</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Not Available</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@car.Id" class="btn btn-info btn-sm">
+                                <i class="fas fa-eye"></i> Details
+                            </a>
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@car.Id" class="btn btn-warning btn-sm">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-@car.Id">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+
+                            <!-- Delete Modal -->
+                            <div class="modal fade" id="deleteModal-@car.Id" tabindex="-1" aria-labelledby="deleteModalLabel-@car.Id" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel-@car.Id">Delete Car</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to delete this car?</p>
+                                            <p><strong>@car.Brand @car.Model (@car.Year)</strong></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form method="post" asp-action="Delete" asp-controller="BookCar" asp-route-carId="@car.Id">
+                                                @Html.AntiForgeryToken()
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info mt-3">
+            <h2>No Cars Found!</h2>
+            <p>There are currently no cars in the system.</p>
+        </div>
+    }
+</div>

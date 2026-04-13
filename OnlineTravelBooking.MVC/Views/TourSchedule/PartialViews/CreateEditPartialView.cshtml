@@ -1,0 +1,48 @@
+﻿@using OnlineTravelBooking.Application.Abstractions
+@using OnlineTravelBooking.Domain.Entities.Tour
+
+@inject IGenericRepository<Tour> _tourRepository
+@inject IGenericRepository<TourSchedule> _tourScheduleRepository
+
+@{
+    var tours = new SelectList(
+        _tourRepository.GetAll().Result.Select(tc => new
+        {
+            Id = tc.Id,
+            Title = tc.Title
+        }),
+        "Id",
+        "Title");
+}
+@model TourScheduleDto
+@{
+    var tourSchedule = (Model != null && Model.Id > 0)
+        ? _tourScheduleRepository.GetById(Model.Id)
+        : null;
+}
+
+
+
+<div class="form-group mb-3 col-6">
+    <label class="form-label" asp-for="StartDate"></label>
+    <input asp-for="StartDate" class="form-control" />
+    <span asp-validation-for="StartDate" class="text-danger"></span>
+</div>
+
+<div class="form-group mb-3 col-6">
+    <label class="form-label" asp-for="EndDate"></label>
+    <input asp-for="EndDate" class="form-control" />
+    <span asp-validation-for="EndDate" class="text-danger"></span>
+</div>
+<div class="form-group mb-3 col-6">
+    <label class="form-label" asp-for="AvailableSeats"></label>
+    <input asp-for="AvailableSeats" class="form-control" />
+    <span asp-validation-for="AvailableSeats" class="text-danger"></span>
+</div>
+<div class="form-group mb-3 col-6">
+    <label class="form-label" asp-for="TourId"></label>
+    <select asp-for="TourId" class="form-select" asp-items="tours">
+        <option value="">-- Select Category --</option>
+    </select>
+    <span asp-validation-for="TourId" class="text-danger"></span>
+</div>

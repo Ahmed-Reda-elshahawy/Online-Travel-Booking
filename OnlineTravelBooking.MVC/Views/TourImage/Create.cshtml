@@ -1,0 +1,44 @@
+﻿@using OnlineTravelBooking.Application.Abstractions
+@using OnlineTravelBooking.Domain.Entities.Tour
+@model TourImagesDto
+@inject IGenericRepository<Tour> _tourRepository
+@{
+    ViewData["Title"] = "Create";
+}
+@{
+    var tours = new SelectList(
+        _tourRepository.GetAll().Result.Select(tc => new
+        {
+            Id = tc.Id,
+            Title = tc.Title
+        }),
+        "Id",
+        "Title");
+}
+
+
+
+<div class="row justify-content-center align-content-center mt-3">
+    <h1 class="col-8 my-4">Create Employee</h1>
+    <form method="post" asp-controller="TourImage" asp-action="Create" class=" row col-8" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly"></div>
+        @* <partial name="PartialViews/CreateEditPartialView" model="Model" /> *@
+        <div class="mb-3">
+            <label asp-for="TourId" class="form-label"></label>
+            <select asp-for="TourId" class="form-select" asp-items="tours">
+                <option value="">-- Select Tour --</option>
+            </select>
+            <span asp-validation-for="TourId" class="text-danger"></span>
+            </div>
+        <div class="mb-3">
+            <label asp-for="ImageFile" class="form-label"></label>
+            <input asp-for="ImageFile" class="form-control" type="file" />
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
+        </div>
+        <div class="mt-4 m-auto">
+            <input class="btn btn-primary" type="submit" value="Save" />
+            <a asp-controller="TourImage" asp-action="Index" class="btn btn-outline-dark">Back to list</a>
+        </div>
+    </form>
+</div>
+
